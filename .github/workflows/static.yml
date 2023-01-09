@@ -49,6 +49,13 @@ jobs:
           github-corners: https://github.com/cleanhub-app/documents/blob/main/privacy_policy.md
           favicon: favicon.svg
 
+      - name: Create index page from readme.md
+        uses: jaywcjlove/markdown-to-html-cli@main
+        with:
+          source: readme.md
+          output: index.html
+          favicon: favicon.svg
+
       - name: Upload documents
         uses: actions/upload-pages-artifact@v1
         with:
