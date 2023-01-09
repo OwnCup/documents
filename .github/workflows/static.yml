@@ -36,7 +36,7 @@ jobs:
       - name: Upload privacy_policy
         uses: actions/upload-pages-artifact@v1
         with:
-          path: '${{ github.workspace }}/privacy_policy.html'
+          path: '${{ github.workspace }}'
   # Single deploy job since we're just deploying
   deploy:
     environment:
