@@ -22,6 +22,7 @@ concurrency:
 
 jobs:
   build:
+    runs-on: ubuntu-latest
     steps:
       - name: Converts Markdown to HTML
         uses: jaywcjlove/markdown-to-html-cli@main
