@@ -33,10 +33,10 @@ jobs:
           output: privacy_policy.html
           github-corners: https://github.com/jaywcjlove/markdown-to-html-cli
 
-      - name: Upload artifacts
+      - name: Upload privacy_policy
         uses: actions/upload-pages-artifact@v1
         with:
-          path: '${{ github.workspace }}/*.html'
+          path: '${{ github.workspace }}/privacy_policy.html'
   # Single deploy job since we're just deploying
   deploy:
     environment:
