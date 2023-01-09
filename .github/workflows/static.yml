@@ -21,12 +21,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+  build:
     steps:
       - name: Converts Markdown to HTML
         uses: jaywcjlove/markdown-to-html-cli@main
@@ -34,6 +29,18 @@ jobs:
           source: privacy_policy.md
           output: privacy_policy.html
           github-corners: https://github.com/jaywcjlove/markdown-to-html-cli
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: privacy_policy
+          path: '${{ github.workspace }}/privacy_policy.html'
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
