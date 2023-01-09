@@ -24,7 +24,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Converts Markdown to HTML
         uses: jaywcjlove/markdown-to-html-cli@main
@@ -32,11 +32,11 @@ jobs:
           source: privacy_policy.md
           output: privacy_policy.html
           github-corners: https://github.com/jaywcjlove/markdown-to-html-cli
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+
+      - name: Upload artifacts
+        uses: actions/upload-pages-artifact@v1
         with:
-          name: privacy_policy
-          path: '${{ github.workspace }}/privacy_policy.html'
+          path: '${{ github.workspace }}/*.html'
   # Single deploy job since we're just deploying
   deploy:
     environment:
