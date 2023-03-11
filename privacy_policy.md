@@ -10,10 +10,10 @@ Some of our services might be subject to a separate privacy policy. If a separat
 This Privacy Statement may be updated from time to time in order to reflect the changes in data processing practices or otherwise. You can find the current version on the Website. We will not make substantial changes to this Privacy Statement or reduce the rights of the Users under this Privacy Statement without providing a notice thereof.
 
 ### 1. CleanHub’S CONTACT DETAILS
-   Name: CleanHub
-   Business ID: TODO: paste Business ID here
-   Correspondence address: TODO: paste Correspondence addresshere
-   E-mail address: klgleb@gmail.com
+   Name: Gleb Klimov pr CleanHub.  
+   Business ID (Регистарски број/Матични број): 66892042.   
+   Correspondence address: КРАЉА ПЕТРА 69, спрат 4, стан 8, БЕОГРАД (СТАРИ ГРАД), СТАРИ ГРАД, Србија.   
+   E-mail address: klgleb@gmail.com. 
 
 
 ### 2. PERSONAL DATA PROCESSED AND SOURCES OF DATA
