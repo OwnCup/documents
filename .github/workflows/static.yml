@@ -33,20 +33,12 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v2
 
-      - name: Converts terms_of_service Markdown to HTML
-        uses: jaywcjlove/markdown-to-html-cli@main
-        with:
-          source: terms_of_service.md
-          output: terms_of_service.html
-          github-corners: https://github.com/cleanhub-app/documents/blob/main/terms_of_service.md
-          favicon: favicon.svg
-
       - name: Converts statement Markdown to HTML
         uses: jaywcjlove/markdown-to-html-cli@main
         with:
           source: privacy_policy.md
           output: privacy_policy.html
-          github-corners: https://github.com/cleanhub-app/documents/blob/main/privacy_policy.md
+          github-corners: https://github.com/JomoEvents/docs/blob/main/privacy_policy.md
           favicon: favicon.svg
 
       - name: Create index page from readme.md
