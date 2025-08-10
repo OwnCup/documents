@@ -1,5 +1,5 @@
 # Jomo Privacy Statement
-Jomo process personal data of their users of Jomo’s services (“Jomo App”) and the visitors of the website jomo.events (“Website”).
+Jomo process personal data of their users of Jomo’s services (“Jomo App”) and the visitors of the website jomo.gleb.at (“Website”).
 
 In this Privacy Statement, the word “Jomo Services” refers jointly to the Website and the Jomo App. In this Privacy Statement, the word “User” or “you” refers jointly to our and our group companies’ customers, representatives and other authorized users of our customer organizations, potential customers and the users of the Jomo Services. You become a customer of Jomo when you register to the Jomo Services and create a user account.
 
