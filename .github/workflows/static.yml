@@ -38,15 +38,15 @@ jobs:
         with:
           source: privacy_policy.md
           output: privacy_policy.html
-          github-corners: https://github.com/JomoEvents/docs/blob/main/privacy_policy.md
-          favicon: favicon.svg
+#          github-corners: https://github.com/JomoEvents/docs/blob/main/privacy_policy.md
+          favicon: favicon.webp
 
       - name: Create index page from readme.md
         uses: jaywcjlove/markdown-to-html-cli@main
         with:
           source: readme.md
           output: index.html
-          favicon: favicon.svg
+          favicon: favicon.webp
 
       - name: Upload documents
         uses: actions/upload-pages-artifact@v3

@@ -1,5 +1,5 @@
-# CleanHub Documents
+# OwnCup Documents
 
-Here are the documents used in the [Jomo app](https://jomo.gleb.at):
+Here are the documents used in the [OwnCup app](https://owncup.eu):
 
-[Privacy Policy](https://docs.jomo.gleb.at/privacy_policy.html)
+[Privacy Policy](https://docs.owncup.eu/privacy_policy.html)
