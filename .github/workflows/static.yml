@@ -33,13 +33,30 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v2
 
-      - name: Converts statement Markdown to HTML
+      - name: Converts statement Markdown to HTML (privacy policy)
         uses: jaywcjlove/markdown-to-html-cli@main
         with:
           source: privacy_policy.md
           output: privacy_policy.html
-#          github-corners: https://github.com/JomoEvents/docs/blob/main/privacy_policy.md
+          github-corners: https://github.com/OwnCup/documents/blob/main/privacy_policy.md
           favicon: favicon.webp
+
+      - name: Converts statement Markdown to HTML (privacy policy bolgarian)
+        uses: jaywcjlove/markdown-to-html-cli@main
+        with:
+          source: privacy_policy_bg.md
+          output: privacy_policy_bg.html
+          github-corners: https://github.com/OwnCup/documents/blob/main/privacy_policy_bg.md
+          favicon: favicon.webp
+      
+      - name: Converts statement Markdown to HTML (cookie policy)
+        uses: jaywcjlove/markdown-to-html-cli@main
+        with:
+          source: cookie_policy.md
+          output: cookie_policy.html
+          github-corners: https://github.com/OwnCup/documents/blob/main/cookie_policy.md
+          favicon: favicon.webp
+
 
       - name: Create index page from readme.md
         uses: jaywcjlove/markdown-to-html-cli@main
