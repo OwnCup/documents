@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Account Deletion</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+
+    function AccountDeletion() {
+      const [step, setStep] = useState(1);
+      const [email, setEmail] = useState("");
+      const [password, setPassword] = useState("");
+      const [code, setCode] = useState("");
+      const [lang, setLang] = useState("en");
+      const [loading, setLoading] = useState(false);
+      const [error, setError] = useState("");
+
+      const API_URL = "https://api.owncup.eu/graphql";
+
+      const t = {
+        en: {
+          title: "Delete Account",
+          email: "Email",
+          password: "Password",
+          confirmCode: "Confirmation Code",
+          sendCode: "Send code",
+          delete: "Delete",
+          success: "Your account has been successfully deleted.",
+          required: "This field is required",
+          serverError: "Server error",
+        },
+        bg: {
+          title: "Изтриване на акаунт",
+          email: "Имейл",
+          password: "Парола",
+          confirmCode: "Код за потвърждение",
+          sendCode: "Изпрати код",
+          delete: "Изтрий",
+          success: "Вашият акаунт беше изтрит успешно.",
+          required: "Това поле е задължително",
+          serverError: "Грешка в сървъра",
+        },
+      };
+
+      async function step1() {
+        setError("");
+        if (!email || !password) {
+          setError(t[lang].required);
+          return;
+        }
+
+        setLoading(true);
+        try {
+          const res1 = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              query: `query($email:String!,$password:String!){ auth(email:$email,password:$password){accessToken refreshToken} }`,
+              variables: { email, password },
+            }),
+          });
+
+          if (!res1.ok) throw new Error(`${t[lang].serverError} (${res1.status})`);
+          const json1 = await res1.json();
+          if (json1.errors && json1.errors.length) throw new Error(json1.errors[0].message);
+
+          const accessToken = json1.data.auth.accessToken;
+          if (!accessToken) throw new Error("Failed to get access token");
+
+          const res2 = await fetch(API_URL, {
+            method: "POST",
+            headers: { 
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({ query: `{ removeAccountCode }` }),
+          });
+
+          if (!res2.ok) throw new Error(`${t[lang].serverError} (${res2.status})`);
+          const json2 = await res2.json();
+          if (json2.errors && json2.errors.length) throw new Error(json2.errors[0].message);
+
+          setStep(3);
+        } catch (e) {
+          setError(e.message || String(e));
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      async function step3() {
+        setError("");
+        if (!code) {
+          setError(t[lang].required);
+          return;
+        }
+
+        setLoading(true);
+        try {
+          const res = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              query: `query($code:String!){ removeData(code:$code) }`,
+              variables: { code },
+            }),
+          });
+
+          if (!res.ok) throw new Error(`${t[lang].serverError} (${res.status})`);
+          const json = await res.json();
+          if (json.errors && json.errors.length) throw new Error(json.errors[0].message);
+
+          if (json.data && json.data.removeData) {
+            setStep(4);
+          } else {
+            throw new Error(json.data && json.data.removeData === false ? "Failed to remove account" : "Unexpected response");
+          }
+        } catch (e) {
+          setError(e.message || String(e));
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      return (
+        <div className="p-6 max-w-md mx-auto">
+          <select value={lang} onChange={(e) => setLang(e.target.value)} className="mb-4 p-2 border rounded">
+            <option value="en">English</option>
+            <option value="bg">Български</option>
+          </select>
+
+          <h1 className="text-2xl mb-4">{t[lang].title}</h1>
+
+          {error && <div className="mb-4 p-2 border border-red-300 rounded text-red-700">{error}</div>}
+
+          {step === 1 && (
+            <div className="grid gap-2">
+              <input className="p-2 border rounded" placeholder={t[lang].email} value={email} onChange={(e) => setEmail(e.target.value)} disabled={loading} />
+              <input className="p-2 border rounded" type="password" placeholder={t[lang].password} value={password} onChange={(e) => setPassword(e.target.value)} disabled={loading} />
+              <button onClick={step1} className="p-2 rounded bg-gray-200" disabled={loading}>{loading ? "..." : t[lang].sendCode}</button>
+            </div>
+          )}
+
+          {step === 3 && (
+            <div className="grid gap-2">
+              <p className="text-sm">{lang === "bg" ? "Проверете пощата си за код и въведете тук:" : "Check your email for the code and enter it here:"}</p>
+              <input className="p-2 border rounded" placeholder={t[lang].confirmCode} value={code} onChange={(e) => setCode(e.target.value)} disabled={loading} />
+              <div className="flex gap-2">
+                <button onClick={step3} className="p-2 rounded bg-gray-200" disabled={loading}>{loading ? "..." : t[lang].delete}</button>
+                <button onClick={() => setStep(1)} className="p-2 rounded border" disabled={loading} title={lang === "bg" ? "Върни се" : "Go back"}>{lang === "bg" ? "Върни се" : "Back"}</button>
+              </div>
+            </div>
+          )}
+
+          {step === 4 && <p className="text-green-700">{t[lang].success}</p>}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<AccountDeletion />);
+  </script>
+</body>
+</html>
